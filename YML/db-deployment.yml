@@ -1,0 +1,35 @@
+metadata:
+  name: mysql-db-deployment
+  labels:
+    app: 2-tier-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 2-tier-app
+      name: mysql-db
+      tier: backend
+  template:
+    metadata:
+      name: mysql-pod
+      labels:
+        app: 2-tier-app
+        name: mysql-db
+        tier: backend
+    spec:
+      containers:
+        - name: mysql
+          image: akshay77/mysql:1.2
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: Qwerty@12345
+          ports:
+          - containerPort: 3306
+          volumeMounts:
+          - name: persistent-volume
+            mountPath: /var/lib/mysql
+            subPath: mysql-pv-claim
+      volumes:
+      - name: persistent-volume
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim

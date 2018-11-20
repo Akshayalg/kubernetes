@@ -1,0 +1,35 @@
+kind: Deployment
+metadata:
+  name: login-application-deployment
+  labels:
+    app: 2-tier-app
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: 2-tier-app
+      name: login
+      tier: frontend
+  template:
+    metadata:
+      name: login-pod
+      labels:
+        app: 2-tier-app
+        name: login
+        tier: frontend
+    spec:
+      containers:
+        - name: login-application
+          image: akshay77/login:1.5
+          ports:
+          - containerPort: 8080
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20

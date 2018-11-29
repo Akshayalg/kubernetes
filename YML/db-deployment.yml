@@ -22,7 +22,7 @@ spec:
           image: akshay77/mysql:1.2
           env:
           - name: MYSQL_ROOT_PASSWORD
-            value: Qwerty@12345
+            value: Mind@123
           ports:
           - containerPort: 3306
           volumeMounts:

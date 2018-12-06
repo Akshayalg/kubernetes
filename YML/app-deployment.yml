@@ -1,27 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: login-application-deployment
+  name: application-deployment
   labels:
+    name: frontend-deployment
     app: 2-tier-app
 spec:
   replicas: 5
   selector:
     matchLabels:
-      app: 2-tier-app
       name: login
       tier: frontend
   template:
     metadata:
       name: login-pod
       labels:
-        app: 2-tier-app
         name: login
         tier: frontend
     spec:
       containers:
         - name: login-application
-          image: akshay77/login:1.5
+          image: akshay77/webapp:1.1
           ports:
           - containerPort: 8080
           readinessProbe:
